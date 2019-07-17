@@ -2,14 +2,16 @@ import React from 'react';
 import './App.css';
 
 import Form from './Form';
+import Output from './Output';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      operation: 'simplify',
+      operation: '',
       equation: '',
       result: '',
+      display: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,15 +35,24 @@ class App extends React.Component {
       .then(data =>
         this.setState({
           result: data.result,
+          display: true,
         })
       )
       .catch(err => console.log(err));
   }
 
   render() {
+    const { operation, equation, result, display } = this.state;
     return (
       <div>
-        <Form onChange={this.handleChange} onSubmit={this.handleSubmit} operation={this.state.operation} equation={this.state.equation} />
+        <Form onChange={this.handleChange} onSubmit={this.handleSubmit} operation={operation} equation={equation} />
+        {
+          display ? (
+            <Output operation={operation} equation={equation} result={result} />
+          ) : (
+              <div></div>
+            )
+        }
       </div>
     );
   }

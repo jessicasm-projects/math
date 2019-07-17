@@ -5,11 +5,12 @@ const Form = (props) => (
     <label>
       Operation:
       <select name="operation" value={props.operation} onChange={props.onChange}>
+        <option value="" disabled selected>Please Choose...</option>
         <option value="simplify">Simplify</option>
         <option value="factor">Factor</option>
         <option value="derive">Derive</option>
         <option value="integrate">Integrate</option>
-        <option value="zeros">Find O's</option>
+        <option value="zeroes">Find O's</option>
         <option value="tangent">Find Tangent</option>
         <option value="area">Area Under Curve</option>
         <option value="cos">Cosine</option>
