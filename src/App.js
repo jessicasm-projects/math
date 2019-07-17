@@ -34,7 +34,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data =>
         this.setState({
-          result: data.result,
+          result: data.result.toString(),
           display: true,
         })
       )
@@ -44,15 +44,12 @@ class App extends React.Component {
   render() {
     const { operation, equation, result, display } = this.state;
     return (
-      <div>
+      <div className="main">
+        <h1 className="title">Newton Math</h1>
         <Form onChange={this.handleChange} onSubmit={this.handleSubmit} operation={operation} equation={equation} />
-        {
-          display ? (
-            <Output operation={operation} equation={equation} result={result} />
-          ) : (
-              <div></div>
-            )
-        }
+        {display ? (
+          <Output operation={operation} equation={equation} result={result} />
+        ) : <div></div>}
       </div>
     );
   }
