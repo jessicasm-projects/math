@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 
 import Form from './Form';
@@ -25,6 +24,18 @@ class App extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.getResult();
+  }
+
+  getResult() {
+    fetch(`https://newton.now.sh/${this.state.operation}/${this.state.equation}`)
+      .then(res => res.json())
+      .then(data =>
+        this.setState({
+          result: data.result,
+        })
+      )
+      .catch(err => console.log(err));
   }
 
   render() {
