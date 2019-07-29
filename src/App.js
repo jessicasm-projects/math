@@ -5,40 +5,27 @@ import Form from './Form';
 import Output from './Output';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      operation: '',
-      equation: '',
-      result: '',
-      display: false,
-    }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  state = {
+    operation: '',
+    equation: '',
+    result: '',
+    display: false,
   }
 
-  handleChange(event) {
-    let newState = {};
-    newState[event.target.name] = event.target.value;
-    this.setState(newState);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.getResult();
-  }
-
-  getResult() {
-    fetch(`https://newton.now.sh/${this.state.operation}/${this.state.equation}`)
+  getResult = (operation, equation) => {
+    fetch(`https://newton.now.sh/${operation}/${equation}`)
       .then(res => res.json())
       .then(data =>
         this.setState({
+          operation,
+          equation,
           result: data.result.toString(),
           display: true,
         })
       )
       .catch(err => console.log(err));
+    console.log('123');
   }
 
   render() {
@@ -46,7 +33,7 @@ class App extends React.Component {
     return (
       <div className="main">
         <h1 className="title">Newton Math</h1>
-        <Form onChange={this.handleChange} onSubmit={this.handleSubmit} operation={operation} equation={equation} />
+        <Form getResult={this.getResult} />
         {display ? (
           <Output operation={operation} equation={equation} result={result} />
         ) : <div></div>}
